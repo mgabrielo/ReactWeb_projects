@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './header.css';
 import {motion} from 'framer-motion';
 import logo from '../../assets/images/eco-logo.png'
@@ -23,6 +23,7 @@ const nav__links =[
 ]
 
 const Header = () => {
+    const navigate = useNavigate();
     const headerRef =useRef(null);
     const menuRef =useRef(null);
     const totalQuantity = useSelector(state=> state.cart.totalQuantity)
@@ -42,6 +43,10 @@ const Header = () => {
 
     const menuToggle=()=>{
         menuRef.current.classList.toggle('active__menu')
+    }
+    const navigateToCart =(e)=>{
+        e.preventDefault();
+        navigate('/cart')
     }
   return (
     <header className='header' ref={headerRef}>
@@ -69,7 +74,7 @@ const Header = () => {
                             <i className="ri-heart-line"></i>
                             <span className='badge'>1</span>
                         </span>
-                        <span className='cart__icon'>
+                        <span className='cart__icon cursor-pointer' onClick={navigateToCart}>
                         <i className="ri-shopping-bag-line"></i>
                         <span className='badge'>{totalQuantity}</span>
                         </span>
