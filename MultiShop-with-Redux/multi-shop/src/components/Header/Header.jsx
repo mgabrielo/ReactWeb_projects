@@ -108,7 +108,8 @@ const Header = () => {
                                 ):(
                                     <div>
                                         <Link to='/signup'>Sign Up &nbsp;</Link>
-                                        <Link to='/login'>Log In</Link>
+                                        <Link to='/login'>Log In &nbsp;</Link>
+                                        <Link to='/dashboard'>Dashboard &nbsp;</Link>
                                     </div>
                                 )
                             }

@@ -1,0 +1,72 @@
+.admin__header{
+    width: 100%;
+    padding: 20px 0px;
+    background: var(--primary-color);
+}
+
+.admin__nav_top{
+    width: 100%;
+}
+
+.admin__nav_wrapper_top{
+    display: flex;
+    align-items: center;
+    column-gap: 3rem;
+    justify-content: space-between;
+}
+
+.admin__nav_wrapper_top .search__box{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.admin__nav_wrapper_top .logo h2{
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.admin__nav_top_right span i {
+    color: #fff;
+}
+.admin__nav_top_right img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.admin__nav_top_right{
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+}
+.admin__menu{
+    width: 100%;
+    height: 70px;
+    line-height: 80px;
+    background: var(--card-bg-03);
+}
+
+.admin__navigation{
+    text-align: center;
+}
+
+.admin__menu_list{
+    display: flex;
+    align-items: center;
+    column-gap: 2.7rem;
+    justify-content: center;
+}
+
+.admin__menu_list .admin__menu_item a{
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.active__admin_menu{
+    background: #fff;
+}
