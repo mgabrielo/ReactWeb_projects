@@ -13,10 +13,10 @@ export const createPost = /* GraphQL */ `
       comments {
         items {
           id
+          postID
           content
           createdAt
           updatedAt
-          postCommentsId
           owner
           __typename
         }
@@ -41,10 +41,10 @@ export const updatePost = /* GraphQL */ `
       comments {
         items {
           id
+          postID
           content
           createdAt
           updatedAt
-          postCommentsId
           owner
           __typename
         }
@@ -69,10 +69,10 @@ export const deletePost = /* GraphQL */ `
       comments {
         items {
           id
+          postID
           content
           createdAt
           updatedAt
-          postCommentsId
           owner
           __typename
         }
@@ -93,6 +93,7 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
+      postID
       post {
         id
         title
@@ -108,7 +109,6 @@ export const createComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      postCommentsId
       owner
       __typename
     }
@@ -121,6 +121,7 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
+      postID
       post {
         id
         title
@@ -136,7 +137,6 @@ export const updateComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      postCommentsId
       owner
       __typename
     }
@@ -149,6 +149,7 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
+      postID
       post {
         id
         title
@@ -164,7 +165,6 @@ export const deleteComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      postCommentsId
       owner
       __typename
     }

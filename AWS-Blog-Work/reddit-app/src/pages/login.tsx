@@ -12,33 +12,22 @@ import { useRouter } from "next/router";
 
 interface IFormInput {
   username: string;
-  email:string;
   password:string;
-  code: string;
 }
 
-const SignUp = () => {
+const LogIn = () => {
     const router = useRouter()
     const {user, setUser} =useUser()
-    const [open, setOpen] = useState(false)
-    const [showCode, setShowCode] = useState<boolean>(false)
-    const [signUpError, setSignUpError] = useState<string>('')
+    const [open, setOpen] = useState<boolean>(false)
+    const [signInError, setSignInError] = useState<string>('')
     const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    try {
-        
-        if(showCode){
-            confirmSignUp(data)
-        }else{
-            await signUpWithEmailandPass(data);
-            setShowCode(true)
-        }
-
-    } catch (error:any) {
-        console.error(error)
-        setSignUpError(error.message)
-        setOpen(true)       
+    const amplify_user = await Auth.signIn(data?.username, data?.password);
+    if(amplify_user){
+      router.push('/')
+    }else{
+      throw new Error('Something went Wrong With Sign In')
     }
   };
   console.log('user value : ' , user)
@@ -50,40 +39,6 @@ const SignUp = () => {
     setOpen(false)
   }
 
-
-  async function signUpWithEmailandPass(data:IFormInput): Promise<CognitoUser>{
-    const  {username,password, email}= data
-    try {
-        const { user } = await Auth.signUp({
-          username,
-          password,
-          attributes: {
-            email, // optional
-          },
-        });
-        console.log("New User : ",user);
-        return user;
-      } catch (error:any) {
-        // console.log('error signing up:', error);
-        throw new error
-      }
-  }
-
-
-  async function confirmSignUp(data:IFormInput) {
-    const {username, code, password}= data
-    try {
-      await Auth.confirmSignUp(username, code);
-      const amplify_user = await Auth.signIn(username, password); 
-      if(amplify_user){
-          router.push('/')
-      }else{
-        throw new Error('Something went Wrong With Sign In')
-      }
-    } catch (error) {
-      console.log('error confirming sign up', error);
-    }
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,20 +62,6 @@ const SignUp = () => {
             <Grid item>
                 <TextField 
                     variant="outlined" 
-                    id="email"
-                    error={errors.email ?  true : false}
-                    helperText= {errors.email ? errors.email.message : null} 
-                    label='email'  
-                    type="email"
-                    {...register('email', {
-                         
-                        required: {value:true, message:'Please Enter Valid Email'},
-                    })} 
-                />
-            </Grid>
-            <Grid item>
-                <TextField 
-                    variant="outlined" 
                     id="password"
                     error={errors.password ?  true : false}
                     helperText= {errors.password ? errors.password.message : null} 
@@ -134,36 +75,16 @@ const SignUp = () => {
                     })} 
                 />
             </Grid>
-
-            {showCode && (
-            <Grid item>
-                <TextField 
-                    variant="outlined" 
-                    id="code"
-                    error={errors.code ?  true : false}
-                    helperText= {errors.code ? errors.code.message : null} 
-                    label='Verification Code'  
-                    type="text"
-                    {...register('code', {
-                         
-                        required: {value:true, message:'Please Enter code'},
-                        minLength:{ value: 6 , message: 'verification code must be 6 characters'},    
-                        maxLength:{ value: 6, message: 'verification code must be 6 characters'},    
-                    })} 
-                />
-            </Grid>
-            )}
-
             <Grid item style={{marginTop:10}}>
-                <Button variant="contained" type="submit">{showCode ? 'Confirm Code' : 'Sign Up'}</Button>
+                <Button variant="contained" type="submit">{'Sign In'}</Button>
             </Grid>
         </Grid>
         <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-                    {signUpError}
+                    {signInError}
             </Alert>
         </Snackbar>
     </form>
   );
 };
-export default SignUp;
+export default LogIn;

@@ -8,7 +8,7 @@ type Post
   @auth(
     rules: [
       # owners can create, read, update and delete their own post
-      { allow: owner, operations: [create, read, update, delete] }
+      { allow: owner, operations: [create, update, delete, read] }
       # other signed in users can read everyones post
       { allow: private, operations: [read] }
       # not signed in users can also read everyones post
@@ -17,7 +17,7 @@ type Post
   ) {
   id: ID!
   title: String!
-  comments: [Comment] @hasMany
+  comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }
 
 type Comment
@@ -25,7 +25,7 @@ type Comment
   @auth(
     rules: [
       # owners can create, read, update and delete their own post
-      { allow: owner, operations: [create, read, update, delete] }
+      { allow: owner, operations: [create, update, delete, read] }
       # other signed in users can read everyones post
       { allow: private, operations: [read] }
       # not signed in users can also read everyones post
@@ -33,6 +33,7 @@ type Comment
     ]
   ) {
   id: ID!
-  post: Post @belongsTo
+  postID: ID! @index(name: "byPost", sortKeyFields: ["content"])
+  post: Post @belongsTo(fields: ["postID"])
   content: String!
 }
