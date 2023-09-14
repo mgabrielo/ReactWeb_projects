@@ -30,7 +30,7 @@ const LogIn = () => {
       setSignInError('Something went Wrong With Sign In')
     }
   };
-  console.log('user value : ' , user)
+  // console.log('user value : ' , user)
 
   const handleClose=(event?: React.SyntheticEvent, reason?:string)=>{
     if(reason == 'clickaway'){

@@ -41,7 +41,7 @@ const SignUp = () => {
         setOpen(true)       
     }
   };
-  console.log('user value : ' , user)
+  // console.log('user value : ' , user)
 
   const handleClose=(event?: React.SyntheticEvent, reason?:string)=>{
     if(reason == 'clickaway'){
@@ -61,11 +61,11 @@ const SignUp = () => {
             email, // optional
           },
         });
-        console.log("New User : ",user);
+        // console.log("New User : ",user);
         return user;
       } catch (error:any) {
-        // console.log('error signing up:', error);
-        throw new error
+        console.log('error signing up:', error);
+        throw new Error(error?.message)
       }
   }
 

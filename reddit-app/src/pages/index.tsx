@@ -29,8 +29,8 @@ export default function Home() {
     fetchApiPost()
   },[])
 
-  console.log('homepage user:' , user)
-  console.log('homepage posts:' , posts)
+  // console.log('homepage user:' , user)
+  // console.log('homepage posts:' , posts)
   return (
     <Container maxWidth='md'>
         {

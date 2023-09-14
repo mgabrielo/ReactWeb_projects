@@ -1,7 +1,13 @@
+import { CreatePostInput, CreatePostMutation } from "@/API";
 import ImageDropZone from "@/components/ImageDropZone";
+import { createPost } from "@/graphql/mutations";
 import { Button, Container, Grid, TextField } from "@material-ui/core";
-import {FC} from 'react';
+import { API, Storage } from "aws-amplify";
+import { useRouter } from "next/router";
+import {FC, useState} from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
+import { v4 as uuidv4 } from 'uuid';
+import {GRAPHQL_AUTH_MODE} from '@aws-amplify/api'
 
 interface ICreateProps {
     title: string;
@@ -10,14 +16,39 @@ interface ICreateProps {
 }
 
 const Create: FC<ICreateProps> = (props) => {
+    const router = useRouter()
+    const [file, setFile] = useState<File>()
     const { register, formState: { errors }, handleSubmit } = useForm<ICreateProps>();
 
     const onSubmit: SubmitHandler<ICreateProps> = async (data) => {
-        try {
-            
-        } catch (error) {
-            
+
+        if(file){
+
+            try {
+                const imagePath = uuidv4()
+                await Storage.put(imagePath, file, {
+                    contentType: file?.type, // contentType is optional
+                });
+                const createNewPostInput: CreatePostInput ={
+                    title:data?.title,
+                    contents: data?.content,
+                    image:imagePath,
+                    upvotes:0,
+                    downvotes:0
+                }
+                const createNewPost = (await API.graphql({
+                    query:createPost,
+                    variables:{input: createNewPostInput},
+                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                })) as {data : CreatePostMutation}
+
+                // console.log('newpost:',createNewPost)
+                router.push(`/post/${createNewPost.data?.createPost?.id}`)
+            } catch (error) {
+                console.log("Error uploading file: ", error);
+            }
         }
+   
     }
   return (
     <Container style={{maxWidth:'100%'}}>
@@ -57,10 +88,10 @@ const Create: FC<ICreateProps> = (props) => {
                     />  
                 </Grid>
                 <Grid item>
-                        <ImageDropZone/>
+                        <ImageDropZone file={file} setFile={setFile}/>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained">Create Post</Button>
+                    <Button type="submit" variant="contained">Create Post</Button>
                 </Grid>
             </Grid>
         </form>

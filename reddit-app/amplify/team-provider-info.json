@@ -17,6 +17,9 @@
       },
       "api": {
         "redditapp": {}
+      },
+      "storage": {
+        "redditappimages": {}
       }
     }
   }

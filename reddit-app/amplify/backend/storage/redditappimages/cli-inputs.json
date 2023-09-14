@@ -1,0 +1,16 @@
+{
+  "resourceName": "redditappimages",
+  "policyUUID": "09c3589d",
+  "bucketName": "redditappa1d901eef6c044dba0faa7be67dcc39d",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

@@ -1,4 +1,5 @@
 import { Post } from "@/API";
+import { useEffect, useState } from "react";
 import { ButtonBase, Grid, Paper, Typography } from "@material-ui/core";
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -7,6 +8,7 @@ import IconButton from'@material-ui/core/IconButton'
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { timeConvert } from "@/customHooks/formatConverter";
+import { Storage } from "aws-amplify";
 
 interface IPostPreviewProps {
     post :Post
@@ -14,7 +16,21 @@ interface IPostPreviewProps {
 
 const PostPreview: React.FC<IPostPreviewProps> = ({post}) => {
     const router = useRouter()
-   
+   const[postImage, setPostImage]= useState<string>('')
+
+   useEffect(()=>{
+    async function getImageFromStorage() {
+       try {
+        var img = post.image as string
+        const signUrl = await Storage.get(img)
+        setPostImage(signUrl)
+        console.log('newPostImg:', signUrl)
+       } catch (error) {
+        console.log(error)
+       }
+    }
+    getImageFromStorage()
+   },[])
   return (
     <Grid container direction="row" justifyContent="flex-start" spacing={3} alignItems="flex-start" wrap="nowrap" style={{maxWidth:'100%', paddingTop:15}} > 
         <Paper elevation={2} style={{backgroundColor:'cadetblue', width:'100%', display:'flex', marginBottom:10, padding:5}}>
@@ -62,10 +78,10 @@ const PostPreview: React.FC<IPostPreviewProps> = ({post}) => {
                                 </Grid>
 
                                 {
-                                    !post?.image && (
+                                    post?.image && (
                                         <Grid item style={{marginTop:15}} >
                                             <Image 
-                                            src={`https://images.pexels.com/photos/4458/cup-mug-desk-office.jpg?auto=compress&cs=tinysrgb&w=980&h=540&dpr=1`}
+                                            src={postImage}
                                             width={840} 
                                             height={450} 
                                             layout="intrinsic" 

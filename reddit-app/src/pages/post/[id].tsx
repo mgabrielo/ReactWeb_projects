@@ -11,13 +11,17 @@ interface IIndividualPostProps {
 }
 
 const IndividualPost: React.FC<IIndividualPostProps> = ({post}) => {
-    // console.log(post)
+    
   return (
     <Container maxWidth='md'>
         <PostPreview post={post}/>
-        {post.comments?.items.map((comment)=>(
+        {  post?.comments?.items && post.comments?.items.length > 0 ?
+        
+        post.comments?.items.map((comment)=>(
             <Comments key={comment?.postID} comment={comment}/>
-        ))}
+        )):(
+            <div style={{marginTop:20}}> No Comments available</div>
+        )}
     </Container>
   );
 };
