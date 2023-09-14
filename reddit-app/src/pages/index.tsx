@@ -1,11 +1,12 @@
 import { Inter } from 'next/font/google'
 // import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
-import { Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
 import { useUser } from '@/context/AuthContext'
 import { listPosts } from '../graphql/queries'
 import { API } from 'aws-amplify'
 import { ListPostsQuery, Post } from '@/API'
+import PostPreview from '@/components/PostPreview'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -31,7 +32,13 @@ export default function Home() {
   console.log('homepage user:' , user)
   console.log('homepage posts:' , posts)
   return (
-    <Typography variant='h1'>Hello World</Typography>
+    <Container maxWidth='md'>
+        {
+          posts.map((post)=>(
+            <PostPreview key={post?.id} post={post} />
+          ))
+        }
+    </Container>
   )
 }
 

@@ -5,10 +5,18 @@
 export type CreatePostInput = {
   id?: string | null,
   title: string,
+  contents: string,
+  image?: string | null,
+  upvotes: number,
+  downvotes: number,
 };
 
 export type ModelPostConditionInput = {
   title?: ModelStringInput | null,
+  contents?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  upvotes?: ModelIntInput | null,
+  downvotes?: ModelIntInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -54,10 +62,26 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Post = {
   __typename: "Post",
   id: string,
   title: string,
+  contents: string,
+  image?: string | null,
+  upvotes: number,
+  downvotes: number,
   comments?: ModelCommentConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -84,6 +108,10 @@ export type Comment = {
 export type UpdatePostInput = {
   id: string,
   title?: string | null,
+  contents?: string | null,
+  image?: string | null,
+  upvotes?: number | null,
+  downvotes?: number | null,
 };
 
 export type DeletePostInput = {
@@ -133,6 +161,10 @@ export type DeleteCommentInput = {
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  contents?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  upvotes?: ModelIntInput | null,
+  downvotes?: ModelIntInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -172,6 +204,10 @@ export enum ModelSortDirection {
 export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  contents?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
+  upvotes?: ModelSubscriptionIntInput | null,
+  downvotes?: ModelSubscriptionIntInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
 };
@@ -206,6 +242,18 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
+};
+
 export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   postID?: ModelSubscriptionIDInput | null,
@@ -224,6 +272,10 @@ export type CreatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -253,6 +305,10 @@ export type UpdatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -282,6 +338,10 @@ export type DeletePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -315,6 +375,10 @@ export type CreateCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -344,6 +408,10 @@ export type UpdateCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -373,6 +441,10 @@ export type DeleteCommentMutation = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -397,6 +469,10 @@ export type GetPostQuery = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -429,6 +505,10 @@ export type ListPostsQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -454,6 +534,10 @@ export type GetCommentQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -486,6 +570,10 @@ export type ListCommentsQuery = {
         __typename: "Post",
         id: string,
         title: string,
+        contents: string,
+        image?: string | null,
+        upvotes: number,
+        downvotes: number,
         createdAt: string,
         updatedAt: string,
         owner?: string | null,
@@ -519,6 +607,10 @@ export type CommentsByPostIDAndContentQuery = {
         __typename: "Post",
         id: string,
         title: string,
+        contents: string,
+        image?: string | null,
+        upvotes: number,
+        downvotes: number,
         createdAt: string,
         updatedAt: string,
         owner?: string | null,
@@ -542,6 +634,10 @@ export type OnCreatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -571,6 +667,10 @@ export type OnUpdatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -600,6 +700,10 @@ export type OnDeletePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    contents: string,
+    image?: string | null,
+    upvotes: number,
+    downvotes: number,
     comments?:  {
       __typename: "ModelCommentConnection",
       items:  Array< {
@@ -633,6 +737,10 @@ export type OnCreateCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -662,6 +770,10 @@ export type OnUpdateCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
@@ -691,6 +803,10 @@ export type OnDeleteCommentSubscription = {
       __typename: "Post",
       id: string,
       title: string,
+      contents: string,
+      image?: string | null,
+      upvotes: number,
+      downvotes: number,
       comments?:  {
         __typename: "ModelCommentConnection",
         nextToken?: string | null,
