@@ -27,7 +27,7 @@ const LogIn = () => {
     if(amplify_user){
       router.push('/')
     }else{
-      throw new Error('Something went Wrong With Sign In')
+      setSignInError('Something went Wrong With Sign In')
     }
   };
   console.log('user value : ' , user)

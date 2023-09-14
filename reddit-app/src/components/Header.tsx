@@ -10,9 +10,9 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import { useState } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Auth } from 'aws-amplify';
-
+import AddIcon from '@material-ui/icons/Add'
+import { Tooltip } from '@material-ui/core';
 
 interface IHeaderProps {
 }
@@ -35,9 +35,8 @@ const Header: React.FC<IHeaderProps> = (props) => {
         await Auth.signOut()
     }
   return(
-    <Box style={{ flexGrow: 1, marginBottom:10 }}>
-
-    <AppBar position="static" color='inherit'>
+    <>
+    <AppBar position="static" color='inherit' style={{marginBottom:10}}>
       <Toolbar>
         <IconButton
           edge="start"
@@ -52,7 +51,11 @@ const Header: React.FC<IHeaderProps> = (props) => {
           Reddit Blog
         </Typography>
         {user && (
-          <div>
+          <>
+            <Tooltip title='Create post'>
+                <Button style={{color:'inherit', marginRight:5}} onClick={()=>router.push('/create')}><AddIcon color='inherit' fontSize='medium'/>Create Post</Button>
+            </Tooltip>
+            <Button onClick={signOut}>Sign Out</Button>
             <IconButton
               size="medium"
               aria-label="account of current user"
@@ -62,8 +65,8 @@ const Header: React.FC<IHeaderProps> = (props) => {
             >
               <AccountCircle />
             </IconButton>
-                <Button onClick={signOut}>Sign Out</Button>
-          </div>
+          </>
+          
         )}
         {!user && (
             <>
@@ -73,7 +76,9 @@ const Header: React.FC<IHeaderProps> = (props) => {
         )}
       </Toolbar>
     </AppBar>
-  </Box>
+    </>
+
+  
   ) ;
 };
 
