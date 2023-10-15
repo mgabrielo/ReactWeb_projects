@@ -31,7 +31,6 @@ const UpdateListing = () => {
     //  console.log('formData:',formData)
 
     useEffect(()=>{
-        let x = true;
         const fetchListing =async()=>{
             const listingId = params.id
             const res = await fetch(`/api/listing/get/${listingId}`)
@@ -42,12 +41,7 @@ const UpdateListing = () => {
             }
             setFormData(data)
         }
-        if(x === true){
-            fetchListing()
-        }
-        return ()=> {
-            x = false
-        }
+        fetchListing()
     },[])
 
     const handleImageSubmit=(e)=>{
@@ -100,7 +94,6 @@ const UpdateListing = () => {
     }
 
     const handleChange=(e)=>{
-        e.preventDefault();
         if(e.target.id =='sale' || e.target.id =='rent'){
             setFormData({
                 ...formData,

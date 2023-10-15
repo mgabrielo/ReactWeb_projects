@@ -79,7 +79,6 @@ const CreateListing = () => {
     }
 
     const handleChange=(e)=>{
-        e.preventDefault();
         if(e.target.id =='sale' || e.target.id =='rent'){
             setFormData({
                 ...formData,
