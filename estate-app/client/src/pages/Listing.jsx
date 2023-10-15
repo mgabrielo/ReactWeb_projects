@@ -25,6 +25,7 @@ const Listing = () => {
     const [error, setError]= useState(false);
     const [copied, setCopied] = useState(false);
     const [contact, setContact] = useState(false);
+
     useEffect(()=>{
         const fetchListing = async()=>{
             try {
