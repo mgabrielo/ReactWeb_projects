@@ -64,17 +64,17 @@ export const getListings = async (req, res, next) => {
         const startIndex = parseInt(req.query.startIndex) || 0;
 
         let offer = req.query.offer;
-        if (offer === undefined || offer === false) {
+        if (offer === undefined || offer === 'false') {
             offer = { $in: [false, true] }
         }
 
         let furnished = req.query.furnished;
-        if (furnished === undefined || furnished === false) {
+        if (furnished === undefined || furnished === 'false') {
             furnished = { $in: [false, true] }
         }
 
         let parking = req.query.parking;
-        if (parking === undefined || parking === false) {
+        if (parking === undefined || parking === 'false') {
             parking = { $in: [false, true] }
         }
 
