@@ -32,7 +32,7 @@ const Contact = ({listing}) => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_f52pd8r', 'template_r76tg2a', form.current, '4ECvU_tmOyNsabauq')
+    emailjs.sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, form.current, import.meta.env.VITE_PUBLIC_URL)
       .then((result) => {
           console.log(result.text);
           console.log('Msg Sent')

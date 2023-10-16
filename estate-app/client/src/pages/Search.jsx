@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ListingItem from '../components/ListingItem'
 
 const Search = () => {
     const navigate = useNavigate()
@@ -90,7 +91,7 @@ const Search = () => {
 
   return (
     <div className='flex flex-col md:flex-row'>
-        <div className='p-7 border-b-2 md:border-b-2 md:min-h-screen border-slate-800 '>
+        <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen border-slate-300 '>
             <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className='flex items-center gap-2'>
                     <label className='whitespace-nowrap'>Search Term</label>
@@ -143,8 +144,27 @@ const Search = () => {
                 <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>Search</button>
             </form>
         </div>
-        <div className=''>
-            <h1>Listing Results:</h1>
+        <div className='flex-1'>
+            <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing Results:</h1>
+            <div className='p-7 flex flex-wrap gap-3'>
+                {
+                    !loading && listings.length === 0 && (
+                        <p className='text-large text-slate-700 p-3'>No Listing Found</p>
+                    )
+                    
+                }
+                {
+                    loading && (
+                        <p className='text-xl text-slate-700 text-center w-full'>Loading...</p>
+                    )
+                }
+
+                {
+                    !loading && listings.length > 0 && listings.map((listing)=>(
+                        <ListingItem key = {listing._id} listing = {listing} />
+                    ))
+                }
+            </div>
         </div>
     </div>
   )
