@@ -28,7 +28,6 @@ const Search = () => {
         const sortUrl = urlParams.get('sort');
         const orderUrl = urlParams.get('order');
 
-
         if(searchTermUrl || typeUrl || parkingUrl || furnishedUrl || offerUrl || sortUrl || orderUrl){
             setSideBarData({
                 searchTerm: searchTermUrl || '',
@@ -40,7 +39,6 @@ const Search = () => {
                 order:orderUrl || 'desc' 
             })
         }
-
         const fetchListing =async()=>{
             setLoading(true)
             const searchQuery = urlParams.toString();
@@ -95,8 +93,7 @@ const Search = () => {
     }
 
     
-    const showMoreResults=async(e)=>{
-        e.preventDefault()
+    const showMoreResults=async()=>{
         const numberOfListings= listings.length;
         const startIndex =numberOfListings
         const urlParams = new URLSearchParams(location.search);
@@ -180,17 +177,17 @@ const Search = () => {
                 }
 
                 {
-                    !loading && listings.length > 0 && listings.map((listing)=>(
+                    !loading && listings && listings.map((listing)=>(
                         <ListingItem key = {listing._id} listing = {listing} />
                     ))
                 }
-                {
+                {/* {
                     showMore && (
                         <button className='text-green-700 hover:underline p-5 w-full text-center' onClick={showMoreResults}>
                             Show More Results
                         </button>
                     )
-                }
+                } */}
             </div>
         </div>
     </div>

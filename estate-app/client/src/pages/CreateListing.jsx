@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const CreateListing = () => {
     const {currentUser} = useSelector((state)=> state.user);
     const navigate = useNavigate()
-    console.log(currentUser)
+    // console.log(currentUser)
     const [files,setFiles]= useState([]);
     const [formData,setFormData]= useState({
         imageUrls:[],
@@ -27,7 +27,7 @@ const CreateListing = () => {
      const [uploading, setUploading] = useState(false)
      const [error, setError] = useState(false)
      const [loading, setLoading] = useState(false)
-     console.log('formData:',formData)
+    //  console.log('formData:',formData)
 
     const handleImageSubmit=(e)=>{
         e.preventDefault();
@@ -60,7 +60,7 @@ const CreateListing = () => {
             const uploadTask = uploadBytesResumable(storageRef, file);
             uploadTask.on('state_changed',((snapshot)=>{
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('progress:',progress)
+                // console.log('progress:',progress)
             }), (error)=>{
                 reject(error)
             }, ()=>{

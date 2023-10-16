@@ -4,6 +4,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import { updateUserStart,updateUserSuccess,updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess } from '../redux/user/userSlice'
 import { app } from '../firebase'
 import { Link, useNavigate } from 'react-router-dom'
+import {toast } from 'react-toastify'
 
 const Profile = () => {
     const fileRef= useRef(null)
@@ -18,8 +19,8 @@ const Profile = () => {
     const [showListingsError, setShowListingsError]= useState(false)
     const [userListings, setUserListings]= useState([])
 
-        console.log(formData)
-        console.log(filePercent+'% of file upload done')
+        // console.log(formData)
+        // console.log(filePercent+'% of file upload done')
     useEffect(()=>{
         if(file){
             handleFileUpload(file)
@@ -39,7 +40,7 @@ const Profile = () => {
             setFileUploadError(true)
         },()=>{
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
-                console.log('url:', downloadURL)
+                // console.log('url:', downloadURL)
                 setFormData({...formData, avatar: downloadURL})
             })
         })
@@ -116,11 +117,16 @@ const Profile = () => {
                 method:'GET'
             })
             const data = await res.json();
+
             if(data.success === false){
                 setShowListingsError(true)
                 return
             }
+            if (data.length === 0){
+                toast.error('No listing Available');
+            }
             setUserListings(data)
+            
             // console.log('user-listing-data:',data)            
         } catch (error) {
             setShowListingsError(true)
@@ -211,7 +217,8 @@ const Profile = () => {
         <p className='text-red-700 mt-3 text-center'>{error ? error : ''}</p>
         <p className='text-green-700 mt-3 text-center'>{updateSuccess ? 'User Updated Successfully' : ''}</p>
         <button className='text-green-700 w-full' onClick={handleShowListings}>Show Listings</button>
-        <p>{showListingsError ? 'Error Showing Lisitngs': ''}</p>
+    
+        <p className='text-center w-full'>{showListingsError ? 'Error Showing Lisitngs': ''}</p>
         
         {
             userListings && userListings.length > 0 && 

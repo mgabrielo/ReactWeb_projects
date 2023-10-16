@@ -75,7 +75,7 @@ const UpdateListing = () => {
             const uploadTask = uploadBytesResumable(storageRef, file);
             uploadTask.on('state_changed',((snapshot)=>{
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('progress:',progress)
+                // console.log('progress:',progress)
             }), (error)=>{
                 reject(error)
             }, ()=>{
@@ -142,7 +142,7 @@ const UpdateListing = () => {
             if(data.success == false){
                 setError(data.message)
             }
-            console.log('listing-data:', data)
+            // console.log('listing-data:', data)
             navigate(`/listing/${data._id}`)
 
         } catch (error) {
