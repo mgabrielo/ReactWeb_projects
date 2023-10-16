@@ -225,7 +225,7 @@ const CreateListing = () => {
                             className='p-3 border border-gray-300 rounded-lg' 
                             id='regularPrice' 
                             min={50} 
-                            max={1000} 
+                            max={100000} 
                             required
                             onChange={handleChange}
                             value={formData.regularPrice}
@@ -242,7 +242,7 @@ const CreateListing = () => {
                                 className='p-3 border border-gray-300 rounded-lg' 
                                 id='discountPrice' 
                                 min={0} 
-                                max={1000} 
+                                max={100000} 
                                 required
                                 onChange={handleChange} 
                                 value={formData.discountPrice}

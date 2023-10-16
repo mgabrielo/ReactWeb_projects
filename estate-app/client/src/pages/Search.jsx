@@ -15,6 +15,7 @@ const Search = () => {
     })
     const [loading, setLoading]= useState(false);
     const [listings, setListings]= useState([]);
+    const [showMore, setShowMore] = useState(false)
     // console.log('sideBarData:', sideBarData)
     console.log('get-listing-data:', listings)
     useEffect(()=>{
@@ -45,12 +46,17 @@ const Search = () => {
             const searchQuery = urlParams.toString();
             const res = await fetch(`/api/listing/get?${searchQuery}`)
             const data = await res.json()
+            if(data.length > 8){
+                setShowMore(true)
+            }else{
+                setShowMore(false)
+            }
             setListings(data)
             setLoading(false)
-           
         }
         fetchListing()
     },[location.search])
+
 
     const handleChange =(e)=>{
         if(e.target.id === 'all' || e.target.id === 'rent' ||  e.target.id === 'sale'){
@@ -88,10 +94,24 @@ const Search = () => {
         navigate(`/search?${searchQuery}`)
     }
 
-
+    
+    const showMoreResults=async(e)=>{
+        e.preventDefault()
+        const numberOfListings= listings.length;
+        const startIndex =numberOfListings
+        const urlParams = new URLSearchParams(location.search);
+         urlParams.set('startIndex', startIndex);
+         const searchQuery = urlParams.toString()
+         const res = await fetch(`/api/listing/get?${searchQuery}`)
+         const data = await res.json()
+         if(data.length < 9){
+            setShowMore(false)
+         }
+         setListings([...listings, ...data])
+    }
   return (
     <div className='flex flex-col md:flex-row'>
-        <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen border-slate-300 '>
+        <div className='p-4 border-b-2 md:border-r-2 md:min-h-screen border-slate-300 '>
             <form className='flex flex-col gap-5' onSubmit={handleSubmit}>
                 <div className='flex items-center gap-2'>
                     <label className='whitespace-nowrap'>Search Term</label>
@@ -146,7 +166,7 @@ const Search = () => {
         </div>
         <div className='flex-1'>
             <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>Listing Results:</h1>
-            <div className='p-7 flex flex-wrap gap-3'>
+            <div className='p-8 flex flex-wrap gap-3'>
                 {
                     !loading && listings.length === 0 && (
                         <p className='text-large text-slate-700 p-3'>No Listing Found</p>
@@ -163,6 +183,13 @@ const Search = () => {
                     !loading && listings.length > 0 && listings.map((listing)=>(
                         <ListingItem key = {listing._id} listing = {listing} />
                     ))
+                }
+                {
+                    showMore && (
+                        <button className='text-green-700 hover:underline p-5 w-full text-center' onClick={showMoreResults}>
+                            Show More Results
+                        </button>
+                    )
                 }
             </div>
         </div>
