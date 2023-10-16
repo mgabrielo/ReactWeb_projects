@@ -218,7 +218,7 @@ const Profile = () => {
         <p className='text-green-700 mt-3 text-center'>{updateSuccess ? 'User Updated Successfully' : ''}</p>
         <button className='text-green-700 w-full' onClick={handleShowListings}>Show Listings</button>
     
-        <p className='text-center w-full'>{showListingsError ? 'Error Showing Lisitngs': ''}</p>
+        <p className='text-center w-full mt-3'>{showListingsError ? 'Error Showing Lisitngs': ''}</p>
         
         {
             userListings && userListings.length > 0 && 

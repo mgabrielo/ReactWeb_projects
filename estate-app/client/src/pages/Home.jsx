@@ -11,7 +11,7 @@ const Home = () => {
   const [saleListings,setSaleListings]= useState([])
   const [rentListings,setRentListings]= useState([])
   SwiperCore.use([Navigation])
-  console.log('saleListings:', saleListings)
+  // console.log('saleListings:', saleListings)
   useEffect(()=>{
     const fetchOfferListing=async()=>{
       try {
